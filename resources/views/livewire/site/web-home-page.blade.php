@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <!-- Hero Section -->
     <x-hero />
 
@@ -687,4 +687,4 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</div>
