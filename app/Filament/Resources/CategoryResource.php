@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -27,14 +28,18 @@ class CategoryResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
-                                $operation === 'create' ? $set('slug', str()->slug($state)) : null),
+                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                if ($operation === 'create') {
+                                    $set('slug', Str::slug($state));
+                                }
+                            }),
 
                         Forms\Components\TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true)
-                            ->disabled(fn (string $operation) => $operation === 'create'),
+                            ->disabled()
+                            ->dehydrated(),
 
                         Forms\Components\FileUpload::make('image')
                             ->image()
@@ -104,4 +109,9 @@ class CategoryResource extends Resource
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
+
+    // public static function mutateFormDataBeforeCreate(function (array $data): array {
+    //     $data['slug'] = Str::slug($data['name']);
+    //     return $data;
+    // });
 }
