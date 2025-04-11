@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class CarResource extends Resource
 {
@@ -30,6 +31,22 @@ class CarResource extends Resource
                                     ->relationship('category', 'name')
                                     ->required()
                                     ->searchable(),
+                                    Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                        if ($operation === 'create') {
+                                            $set('slug', Str::slug($state));
+                                        }
+                                    }),
+
+                                Forms\Components\TextInput::make('slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique(ignoreRecord: true)
+                                    ->disabled()
+                                    ->dehydrated(),
                                 Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->maxLength(255),
