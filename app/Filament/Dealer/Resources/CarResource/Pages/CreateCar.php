@@ -3,8 +3,8 @@
 namespace App\Filament\Dealer\Resources\CarResource\Pages;
 
 use App\Filament\Dealer\Resources\CarResource;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateCar extends CreateRecord
 {
@@ -13,6 +13,7 @@ class CreateCar extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['dealer_id'] = auth('dealer')->id();
+
         return $data;
     }
 

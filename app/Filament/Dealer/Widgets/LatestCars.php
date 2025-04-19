@@ -10,7 +10,9 @@ use Filament\Widgets\TableWidget as BaseWidget;
 class LatestCars extends BaseWidget
 {
     protected static ?int $sort = 2;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
+
     protected static ?string $heading = 'Recent Listings';
 
     public function table(Table $table): Table

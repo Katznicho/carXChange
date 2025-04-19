@@ -3,17 +3,16 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Car;
-use App\Models\User;
 use App\Models\Dealer;
-use App\Models\Category;
-use App\Models\Adv;
+use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends BaseWidget
 {
     protected static ?int $sort = 1;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getStats(): array
     {
@@ -28,7 +27,7 @@ class StatsOverview extends BaseWidget
                 ]),
 
             Stat::make('Total Dealers', Dealer::count())
-                ->description(Dealer::where('is_verified', true)->count() . ' verified dealers')
+                ->description(Dealer::where('is_verified', true)->count().' verified dealers')
                 ->descriptionIcon('heroicon-m-building-storefront')
                 ->color('warning')
                 ->chart([3, 5, 7, 6, 3, 5, 3, 4])
@@ -37,7 +36,7 @@ class StatsOverview extends BaseWidget
                 ]),
 
             Stat::make('Total Cars', Car::count())
-                ->description(Car::where('is_sold', false)->count() . ' available cars')
+                ->description(Car::where('is_sold', false)->count().' available cars')
                 ->descriptionIcon('heroicon-m-truck')
                 ->color('info')
                 ->chart([4, 5, 3, 7, 4, 5, 3, 6])
@@ -46,7 +45,7 @@ class StatsOverview extends BaseWidget
                 ]),
 
             Stat::make('Active Listings', Car::where('is_active', true)->count())
-                ->description(Car::where('is_featured', true)->count() . ' featured listings')
+                ->description(Car::where('is_featured', true)->count().' featured listings')
                 ->descriptionIcon('heroicon-m-star')
                 ->color('success')
                 ->chart([5, 3, 7, 5, 4, 3, 5, 4])

@@ -2,9 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Models\Dealer;
-use Dealer\Widgets\DealerStatsOverview;
-use Dealer\Widgets\LatestCars;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -30,7 +27,7 @@ class DealerPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->passwordReset()
-            //verifyEmail()
+            // verifyEmail()
             ->profile()
             ->emailVerification()
             ->default()
