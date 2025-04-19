@@ -9,14 +9,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Str;
 
 class CarResource extends Resource
 {
     protected static ?string $model = Car::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-truck';
+
     protected static ?string $navigationGroup = 'Catalog';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -32,7 +34,7 @@ class CarResource extends Resource
                                     ->required()
                                     ->preload()
                                     ->searchable(),
-                                    
+
                                 Forms\Components\Select::make('dealer_id')
                                     ->relationship('dealer', 'name')
                                     ->required()
@@ -55,7 +57,7 @@ class CarResource extends Resource
                                     ->unique(ignoreRecord: true)
                                     ->disabled()
                                     ->dehydrated(),
-                                    
+
                                 Forms\Components\TextInput::make('brand')
                                     ->required()
                                     ->maxLength(255),

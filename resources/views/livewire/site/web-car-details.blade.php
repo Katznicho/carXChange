@@ -6,7 +6,7 @@
             <span class="mx-2 text-gray-500">/</span>
             <a href="#" class="text-blue-600 hover:text-blue-800">Listings</a>
             <span class="mx-2 text-gray-500">/</span>
-            <span class="text-gray-600">Toyota Camry New</span>
+            <span class="text-gray-600">{{ $car->name }}</span>
         </nav>
     </div>
 
@@ -16,9 +16,9 @@
         <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
             <!-- Title and Specs -->
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Toyota Camry New</h1>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $car->name }}</h1>
 
-                <p class="text-gray-700 mb-4">3.5 D5 PowerPulse Momentum 5dr AWD Geartronic Estate</p>
+                {{-- <p class="text-gray-700 mb-4">3.5 D5 PowerPulse Momentum 5dr AWD Geartronic Estate</p> --}}
 
                 <!-- Vehicle Details Pills -->
                 <div class="flex flex-wrap gap-3">
@@ -28,7 +28,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span>2023</span>
+                        <span>{{ $car?->year }}</span>
                     </div>
 
                     <div class="flex items-center bg-blue-50 text-blue-700 rounded-full px-4 py-2">
@@ -37,7 +37,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4" />
                         </svg>
-                        <span>20 miles</span>
+                        <span>{{ number_format($car?->mileage) }} miles</span>
                     </div>
 
                     <div class="flex items-center bg-blue-50 text-blue-700 rounded-full px-4 py-2">
@@ -48,7 +48,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span>Automatic</span>
+                        <span>{{ ucfirst($car?->transmission) }}</span>
                     </div>
 
                     <div class="flex items-center bg-blue-50 text-blue-700 rounded-full px-4 py-2">
@@ -56,7 +56,7 @@
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>Petrol</span>
+                        <span>{{ ucfirst($car?->fuel_type) }}</span>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,8 @@
             <!-- Price and Actions -->
             <div class="mt-6 lg:mt-0 text-right">
                 <div class="flex flex-col items-end">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4"><span class="text-lg">Ugx</span> 40,000,000</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4"><span class="text-lg">Ugx</span>
+                        {{ number_format($car?->price) }}</h2>
                     <button
                         class="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
@@ -115,8 +116,13 @@
                     Great Price
                 </div>
 
-                <img src="https://cdn.pixabay.com/photo/2012/04/12/23/47/car-30984_1280.png" alt="Toyota Camry"
-                    class="w-full h-full object-cover rounded-lg">
+                @if ($car?->images)
+                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
+                        class="w-full h-64 object-cover">
+                @else
+                    <img src="https://cdn.pixabay.com/photo/2012/04/12/23/47/car-30984_1280.png" alt="Toyota Camry"
+                        class="w-full h-64 object-cover">
+                @endif
 
                 <button
                     class="absolute bottom-4 left-4 bg-blue-100 backdrop-blur-sm hover:bg-blue-200 text-gray-800 hover:text-blue-700 px-4 py-2 rounded-md flex items-center font-medium transition duration-300">
@@ -133,6 +139,21 @@
 
             <!-- Side Images Grid -->
             <div class="grid grid-cols-2 gap-4">
+                {{-- @foreach ($car?->images as $idx => $image)
+                    @if ($idx == 0)
+                        @continue
+                        <img src="{{ Storage::url($car?->images[$idx]) }}" alt="Toyota Camry"
+                            class="w-full h-64 object-cover">
+                    @endif
+                @endforeach --}}
+
+                {{-- @if ($car?->images)
+                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
+                        class="w-full h-64 object-cover">
+                @else
+                    <img src="https://cdn.pixabay.com/photo/2012/04/12/23/47/car-30984_1280.png" alt="Toyota Camry"
+                        class="w-full h-64 object-cover">
+                @endif --}}
                 <div class="overflow-hidden rounded-lg">
                     <img src="https://cdn.pixabay.com/photo/2016/05/18/10/52/buick-1400243_1280.jpg"
                         alt="Car Side View 1" class="w-full h-full object-cover rounded-lg">
@@ -174,7 +195,7 @@
                                 <p class="text-gray-600">Body</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">Sedan</p>
+                                <p class="font-medium">{{ $car?->body_type }}</p>
                             </div>
                         </div>
 
@@ -191,7 +212,7 @@
                                 <p class="text-gray-600">Mileage</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">20</p>
+                                <p class="font-medium">{{ number_format($car?->mileage) }} miles</p>
                             </div>
                         </div>
 
@@ -208,7 +229,7 @@
                                 <p class="text-gray-600">Fuel Type</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">Petrol</p>
+                                <p class="font-medium">{{ ucfirst($car?->fuel_type) }}</p>
                             </div>
                         </div>
 
@@ -230,7 +251,7 @@
                                 <p class="text-gray-600">Year</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">2023</p>
+                                <p class="font-medium">{{ $car?->year }}</p>
                             </div>
                         </div>
 
@@ -247,7 +268,7 @@
                                 <p class="text-gray-600">Transmission</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">Automatic</p>
+                                <p class="font-medium">{{ ucfirst($car?->transmission) }}</p>
                             </div>
                         </div>
 
@@ -264,7 +285,7 @@
                                 <p class="text-gray-600">Drive Type</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">All-Wheel Drive (AWD/4WD)</p>
+                                <p class="font-medium">{{ $car?->drive_type }}</p>
                             </div>
                         </div>
                     </div>
@@ -284,7 +305,7 @@
                                 <p class="text-gray-600">Condition</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">New</p>
+                                <p class="font-medium">{{ ucfirst($car?->condition) }}</p>
                             </div>
                         </div>
 
@@ -301,7 +322,7 @@
                                 <p class="text-gray-600">Engine Size</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">3.5</p>
+                                <p class="font-medium">{{ $car?->engine_size }}</p>
                             </div>
                         </div>
 
@@ -317,7 +338,7 @@
                                 <p class="text-gray-600">Door</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">4 Doors</p>
+                                <p class="font-medium">{{ $car?->doors }} Doors</p>
                             </div>
                         </div>
 
@@ -334,7 +355,7 @@
                                 <p class="text-gray-600">Cylinder</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">12</p>
+                                <p class="font-medium">{{ $car?->cylinders }}</p>
                             </div>
                         </div>
 
@@ -351,7 +372,11 @@
                                 <p class="text-gray-600">Color</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">Black, Blue, White</p>
+                                <p class="font-medium">
+                                    @foreach ($car?->color as $c)
+                                        {{ $c }}{{ !$loop->last ? ', ' : '' }}
+                                    @endforeach
+                                </p>
                             </div>
                         </div>
 
@@ -369,7 +394,7 @@
                                 <p class="text-gray-600">VIN</p>
                             </div>
                             <div class="flex-1">
-                                <p class="font-medium">MCB123818</p>
+                                <p class="font-medium">{{ $car?->vin }}</p>
                             </div>
                         </div>
                     </div>
@@ -382,7 +407,8 @@
                     <img src="/api/placeholder/100/100" alt="Dealer"
                         class="w-20 h-20 rounded-full object-cover mb-3" />
                     <h3 class="text-xl font-bold text-center">Dealer</h3>
-                    <p class="text-gray-600">Kawempe, Tula</p>
+                    <p class="text-gray-600">{{ $car?->dealer?->name }}</p>
+                    <p class="text-gray-600">{{ $car?->dealer?->address }}</p>
                 </div>
 
                 <div class="space-y-4 mt-2">
@@ -406,7 +432,7 @@
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
                             </path>
                         </svg>
-                        <span>+256-784 058 538</span>
+                        <span>{{ $car?->dealer?->phone }}</span>
                     </a>
 
                     <button
@@ -451,8 +477,7 @@
 
             <div class="space-y-4 mb-6">
                 <p class="text-gray-700">
-                    Quisque imperdiet dignissim enim dictum finibus. Sed consectetutr convallis enim eget laoreet.
-                    Aenean vitae nisl mollis, porta risus vel, dapibus lectus. Etiam ac suscipit eros, eget maximus
+                    {{ $car?->description }}
                 </p>
 
                 <p class="text-gray-700">
@@ -497,6 +522,23 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Interior</h3>
                     <ul class="space-y-3">
+                        <h1>Car features should be here...</h1>
+                        {{-- @foreach ($car?->features as $feat)
+                            <li class="flex items-center">
+                                <span
+                                    class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+
+                                {{ ucfirst($feat) }}
+                            </li>
+                        @endforeach --}}
+
                         <li class="flex items-center">
                             <span
                                 class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
@@ -801,7 +843,7 @@
     </section>
 
     <section>
-        <div class="max-w-4xl mx-auto p-6">
+        <div class="max-w-6xl mx-auto p-6">
             <!-- Dimensions & Capacity Section -->
             <div class="mb-8">
                 <h2 class="text-3xl font-bold mb-6">Dimensions & Capacity</h2>
@@ -809,56 +851,56 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Length</span>
-                        <span>4950mm</span>
+                        <span>{{ $car?->length }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Width</span>
-                        <span>2100mm</span>
+                        <span>{{ $car?->width }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Height</span>
-                        <span>1550mm</span>
+                        <span>{{ $car?->height }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Width (including mirrors)</span>
-                        <span>2140mm</span>
+                        <span>{{ $car?->length_with_mirrors }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Wheelbase</span>
-                        <span>2580mm</span>
+                        <span>{{ $car?->wheelbase }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Gross Vehicle Weight (kg)</span>
-                        <span>1550</span>
+                        <span>{{ $car?->gross_weight }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Height (including roof rails)</span>
-                        <span>1850mm</span>
+                        <span>{{ $car?->height_with_rails }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Max. Loading Weight (kg)</span>
-                        <span>1200</span>
+                        <span>{{ $car?->max_loading_weight }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Luggage Capacity (Seats Up - Litres)</span>
-                        <span>480</span>
+                        <span>{{ $car?->luggage_capacity_seats_up }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Max. Roof Load (kg)</span>
-                        <span>400</span>
+                        <span>{{ $car?->max_roof_load }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Luggage Capacity (Seats Down - Litres)</span>
-                        <span>850</span>
+                        <span>{{ $car?->luggage_capacity_seats_down }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">No. of Seats</span>
-                        <span>5</span>
+                        <span>{{ $car?->seats }}</span>
                     </div>
                 </div>
             </div>
@@ -872,16 +914,16 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Fuel Tank Capacity (Litres)</span>
-                        <span>80</span>
+                        <span>{{ $car?->fuel_tank_capacity }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Minimum Kerbweight (kg)</span>
-                        <span>350</span>
+                        <span>{{ $car?->min_kerb_weight }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Max. Towing Weight - Braked (kg)</span>
-                        <span>1000</span>
+                        <span>{{ $car?->max_towing_weight_braked }}</span>
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Turning Circle - Kerb to Kerb (m)</span>
@@ -890,7 +932,7 @@
 
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Max. Towing Weight - Unbraked (kg)</span>
-                        <span>1100</span>
+                        <span>{{ $car?->max_towing_weight_unbraked }}</span>
                     </div>
                 </div>
             </div>
@@ -903,7 +945,7 @@
             <div class="mb-12">
                 <h2 class="text-3xl font-bold mb-4">Location</h2>
 
-                <p class="text-lg mb-2">Kawempe, Tula</p>
+                <p class="text-lg mb-2">{{ $car?->dealer?->address }}</p>
 
                 <a href="#" class="inline-flex items-center text-blue-600 mb-4 hover:text-blue-800">
                     Get Direction
@@ -1011,19 +1053,23 @@
     <section>
         <div class="max-w-4xl mx-auto p-6">
             <!-- Reviews Header -->
-            <h2 class="text-3xl font-bold mb-8">2 Reviews</h2>
+            <h2 class="text-3xl font-bold mb-8">{{ $car?->reviews->count() }} Reviews</h2>
 
             <!-- Ratings Overview -->
             <div class="flex flex-col md:flex-row items-start mb-12">
                 <!-- Overall Rating Circle -->
                 <div class="relative w-52 h-52 mb-6 md:mb-0 mr-8">
                     <div class="w-full h-full rounded-full border-[16px] border-blue-100"></div>
+
                     <div
                         class="absolute top-0 left-0 w-full h-full rounded-full border-[16px] border-blue-500 border-t-blue-500 border-r-blue-500 border-b-blue-500 border-l-blue-100">
                     </div>
+
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                         <span class="text-blue-500 text-sm">Overral Rating</span>
-                        <span class="text-blue-500 text-6xl font-bold">4.5</span>
+
+                        <span class="text-blue-500 text-6xl font-bold">
+                            {{ $car?->reviews->sum('rating') / $car?->reviews->count() }}</span>
                         <span class="text-blue-500 text-sm">Out of 5</span>
                     </div>
                 </div>
@@ -1154,99 +1200,39 @@
 
             <!-- Individual Reviews -->
             <div class="space-y-8">
-                <!-- Review 1 -->
-                <div class="border-b pb-8">
-                    <div class="flex items-center mb-4">
-                        <img src="/api/placeholder/48/48" alt="User Profile" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h3 class="font-bold text-lg">Demo</h3>
-                            <span class="text-gray-600">November 30, 2023</span>
+                <div class="border-b pb-0">
+                    @foreach ($car?->reviews as $review)
+                        <div class="mb-6">
+                            <div class="flex items-center mb-4">
+                                {{-- <img src="/api/placeholder/48/48" alt="User Profile" class="w-12 h-12 rounded-full mr-4"> --}}
+                                <div>
+                                    <h3 class="font-bold text-lg">{{ $review?->reviewer_name }}</h3>
+                                    <span class="text-gray-600">{{ $review?->created_at->format('F d, Y') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex text-blue-500 mb-3">
+                                @for ($i = 0; $i < round($review?->rating); $i++)
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path
+                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                @endfor
+                                <span class="ml-2 font-medium">{{ round($review?->rating, 1) }}</span>
+                            </div>
+
+                            <p class="text-gray-800">
+                                {{ $review?->comment }}
+                            </p>
                         </div>
-                    </div>
-
-                    <div class="flex text-blue-500 mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span class="ml-2 font-medium">4.7</span>
-                    </div>
-
-                    <p class="text-gray-800">
-                        Etiam sit amet ex pharetra, venenatis ante vehicula, gravida sapien. Fusce eleifend vulputate
-                        nibh, non cursus augue placerat pellentesque. Sed venenatis risus nec felis mollis.
-                    </p>
-                </div>
-
-                <!-- Review 2 -->
-                <div>
-                    <div class="flex items-center mb-4">
-                        <img src="/api/placeholder/48/48" alt="User Profile" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h3 class="font-bold text-lg">Demo</h3>
-                            <span class="text-gray-600">December 16, 2023</span>
-                        </div>
-                    </div>
-
-                    <div class="flex text-blue-500 mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span class="ml-2 font-medium">5.0</span>
-                    </div>
-
-                    <p class="text-gray-800">
-                        qweqeqeq
-                    </p>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
 
-    <section>
+    {{-- <section>
         <div class="max-w-4xl mx-auto p-6">
             <h1 class="text-3xl font-bold mb-8">Add a review</h1>
 
@@ -1450,5 +1436,5 @@
                 wire:click="submitRating">
                 Submit Rating
             </button>
-    </section>
+    </section> --}}
 </div>

@@ -9,7 +9,7 @@
             <p class="text-xl text-gray-200 mb-8">Discover the perfect vehicle that matches your style and budget</p>
             
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="#" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition">
+                <a href="{{ route('site.car-listings') }}" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition">
                     Browse Cars
                 </a>
                 <a href="#" class="inline-block bg-white text-gray-900 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition">

@@ -22,8 +22,8 @@ class Car extends Model
         'fuel_tank_capacity', 'min_kerb_weight',
         'max_towing_weight_braked', 'max_towing_weight_unbraked',
         'turning_circle', 'width_with_mirrors', 'leading_image',
-        'interior_features', 'exterior_features','safety_features',
-        'comfort_features'
+        'interior_features', 'exterior_features', 'safety_features',
+        'comfort_features',
 
     ];
 
@@ -59,7 +59,7 @@ class Car extends Model
         'turning_circle' => 'integer',
         'width_with_mirrors' => 'integer',
         'cylinders' => 'integer',
-        'doors' => 'integer'
+        'doors' => 'integer',
     ];
 
     public function category(): BelongsTo
@@ -103,7 +103,7 @@ class Car extends Model
             'name' => $this->name,
             'price' => $this->price,
             'description' => $this->description,
-            
+
             'car_overview' => [
                 'body' => $this->body_type,
                 'mileage' => $this->mileage,
@@ -118,7 +118,7 @@ class Car extends Model
                 'color' => $this->color,
                 'vin' => $this->vin,
             ],
-            
+
             'dimensions_capacity' => [
                 'length' => $this->length,
                 'width' => $this->width,
@@ -133,7 +133,7 @@ class Car extends Model
                 'max_roof_load' => $this->max_roof_load,
                 'seats' => $this->seats,
             ],
-            
+
             'engine_transmission' => [
                 'fuel_tank_capacity' => $this->fuel_tank_capacity,
                 'min_kerb_weight' => $this->min_kerb_weight,
@@ -141,14 +141,14 @@ class Car extends Model
                 'max_towing_weight_unbraked' => $this->max_towing_weight_unbraked,
                 'turning_circle' => $this->turning_circle,
             ],
-            
+
             'features' => [
                 'interior' => $this->interior_features,
                 'exterior' => $this->exterior_features,
                 'safety' => $this->safety_features,
                 'comfort' => $this->comfort_features,
             ],
-            
+
             'images' => $this->images,
             'video_url' => $this->video_url,
         ];

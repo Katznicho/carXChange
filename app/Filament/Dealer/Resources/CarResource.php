@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 class CarResource extends Resource
 {
     protected static ?string $model = Car::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
@@ -31,7 +32,7 @@ class CarResource extends Resource
                                     ->relationship('category', 'name')
                                     ->required()
                                     ->searchable(),
-                                    Forms\Components\TextInput::make('name')
+                                Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)

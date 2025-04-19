@@ -12,7 +12,7 @@ class Category extends Model
         'slug',
         'image',
         'description',
-        'is_active'
+        'is_active',
     ];
 
     public function cars(): HasMany

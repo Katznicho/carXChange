@@ -8,7 +8,7 @@ class Adv extends Model
 {
     protected $fillable = [
         'title', 'image', 'link', 'description',
-        'position', 'start_date', 'end_date', 'is_active'
+        'position', 'start_date', 'end_date', 'is_active',
     ];
 
     protected $casts = [

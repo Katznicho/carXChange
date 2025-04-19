@@ -14,7 +14,7 @@ class ReviewSeeder extends Seeder
 
         foreach ($cars as $car) {
             $numberOfReviews = rand(3, 8);
-            
+
             for ($i = 0; $i < $numberOfReviews; $i++) {
                 Review::create([
                     'car_id' => $car->id,

@@ -10,8 +10,10 @@ use Flowframe\Trend\TrendValue;
 class CarsChart extends ChartWidget
 {
     protected static ?string $heading = 'Cars Statistics';
+
     protected static ?int $sort = 3;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getData(): array
     {

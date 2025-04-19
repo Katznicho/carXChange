@@ -9,7 +9,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class DealerStatsOverview extends BaseWidget
 {
     protected static ?int $sort = 1;
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getStats(): array
     {

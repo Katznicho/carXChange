@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 class AdvResource extends Resource
 {
     protected static ?string $model = Adv::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
 
     public static function form(Form $form): Form

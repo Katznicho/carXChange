@@ -21,7 +21,7 @@ class DealerSeeder extends Seeder
         foreach ($dealers as $dealer) {
             Dealer::create([
                 'name' => $dealer,
-                'email' => Str::slug($dealer) . '@example.com',
+                'email' => Str::slug($dealer).'@example.com',
                 'password' => bcrypt('password'),
                 'phone' => fake()->phoneNumber(),
                 'address' => fake()->address(),

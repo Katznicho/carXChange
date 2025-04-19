@@ -13,7 +13,7 @@ class Review extends Model
         'reviewer_email',
         'comment',
         'rating',
-        'is_approved'
+        'is_approved',
     ];
 
     protected $casts = [
