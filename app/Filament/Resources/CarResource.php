@@ -220,6 +220,18 @@ class CarResource extends Resource
                             ])->columnSpanFull(),
                         Forms\Components\RichEditor::make('description')
                             ->columnSpanFull(),
+                        Forms\Components\Section::make('Features')
+                            ->schema([
+                                Forms\Components\TagsInput::make('features.Interior')
+                                    ->label('Interior Features'),
+                                Forms\Components\TagsInput::make('features.Safety')
+                                    ->label('Safety Features'),
+                                Forms\Components\TagsInput::make('features.Exterior')
+                                    ->label('Exterior Features'),
+                                Forms\Components\TagsInput::make('features.Comfort & Convenience')
+                                    ->label('Comfort & Convenience Features'),
+                            ])
+                            ->columns(2),
                         Forms\Components\TagsInput::make('features')
                             ->columnSpanFull(),
                     ])->columnSpan('full'),
@@ -249,6 +261,22 @@ class CarResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('body_type')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('interior_features')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('exterior_features')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('safety_features')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('comfort_features')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('engine_size')
                     ->suffix('L')
                     ->sortable(),

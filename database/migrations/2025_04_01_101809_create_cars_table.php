@@ -56,6 +56,10 @@ return new class extends Migration
         $table->integer('max_towing_weight_unbraked')->nullable();
         $table->integer('turning_circle')->nullable();
         $table->integer('width_with_mirrors')->nullable();
+        $table->json('interior_features')->nullable();
+        $table->json('exterior_features')->nullable();
+        $table->json('safety_features')->nullable();
+        $table->json('comfort_features')->nullable();
         $table->timestamps();
     });
 }
