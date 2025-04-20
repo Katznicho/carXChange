@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             DealerSeeder::class,
             CarSeeder::class,
             ReviewSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }
