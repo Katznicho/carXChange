@@ -44,13 +44,15 @@
                         <div wire:key={{ $car->id }} class="bg-white rounded-lg overflow-hidden shadow">
                             <div class="relative">
 
-                                @if ($car?->images)
-                                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
-                                        class="w-full h-64 object-cover">
-                                @else
-                                    <img src="{{ asset('assets/car_placeholder.png') }}" alt="Toyota Camry"
-                                        class="w-full h-64 object-fit-cover">
-                                @endif
+                                <a href="{{ route('site.car.details', $car->slug) }}">
+                                    @if ($car?->images)
+                                        <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
+                                            class="w-full h-64 object-cover">
+                                    @else
+                                        <img src="{{ asset('assets/car_placeholder.png') }}" alt="Toyota Camry"
+                                            class="w-full h-64 object-fit-cover" />
+                                    @endif
+                                </a>
 
                                 <div class="absolute top-4 left-4">
                                     <span
@@ -210,78 +212,31 @@
         <h2 class="text-4xl font-bold mb-8 text-gray-900">News & reviews</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- News Item 1 -->
-            <div
-                class="group relative overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://cdn.pixabay.com/photo/2016/05/05/18/02/coupe-1374444_1280.jpg"
-                        alt="Mercedes AMG CLE53"
-                        class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+            @foreach ($blogs as $blog)
+                <div
+                    class="group relative overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
+                    <a href="{{ route('site.blog.details', $blog?->slug) }}">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="{{ Storage::url($blog?->featured_image) }}" alt="{{ $blog?->title }}"
+                                class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 class="text-xl font-bold text-white">Sticker-Tape Parade: Mercedes Announces 2026 AMG CLE53
-                        Manufaktur Editions</h3>
-                </div>
-                <a href="#" class="absolute inset-0" aria-label="Read article about Mercedes AMG CLE53"></a>
-            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        </div>
 
-            <!-- News Item 2 -->
-            <div
-                class="group relative overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://cdn.pixabay.com/photo/2017/03/05/15/29/aston-martin-2118857_1280.jpg"
-                        alt="BMW M2"
-                        class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-xl font-bold text-white">{{ $blog?->title }}</h3>
+                        </div>
+                    </a>
                 </div>
-                <div class="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 class="text-xl font-bold text-white">How Are Automakers Responding to Trump's Tariffs?</h3>
-                </div>
-                <a href="#" class="absolute inset-0"
-                    aria-label="Read article about automakers responding to tariffs"></a>
-            </div>
-
-            <!-- News Item 3 -->
-            <div
-                class="group relative overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://cdn.pixabay.com/photo/2019/05/04/23/54/aston-martin-vantage-2019-4179420_1280.jpg"
-                        alt="Volkswagen GLI"
-                        class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 class="text-xl font-bold text-white">How Trump's 25% Tariffs on Automobiles, Automotive Parts
-                        Will Affect You</h3>
-                </div>
-                <a href="#" class="absolute inset-0"
-                    aria-label="Read article about tariffs on automobiles"></a>
-            </div>
-
-            <!-- News Item 4 -->
-            <div
-                class="group relative overflow-hidden rounded-lg shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://cdn.pixabay.com/photo/2023/07/29/16/42/car-8157299_1280.jpg" alt="Toyota Prius"
-                        class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                </div>
-                <div class="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 class="text-xl font-bold text-white">How Much Do Hybrids Currently Depreciate?</h3>
-                </div>
-                <a href="#" class="absolute inset-0" aria-label="Read article about hybrid depreciation"></a>
-            </div>
+            @endforeach
         </div>
 
         <!-- View All Articles Button -->
         <div class="mt-8 text-center">
-            <a href="#"
+            <a href="{{ route('site.blogs') }}"
                 class="inline-flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-blue-600 font-medium text-lg rounded-full hover:bg-blue-600 hover:text-white transition duration-300 shadow-md">
                 View All Articles
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                    fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
                         clip-rule="evenodd" />

@@ -1,14 +1,5 @@
 <div>
-    <!-- Breadcrumb Navigation -->
-    <div class="max-w-7xl mx-auto px-4 pt-4 pb-2">
-        <nav class="flex text-sm">
-            <a href="{{ route('site.index') }}" class="text-blue-600 hover:text-blue-800">Home</a>
-            <span class="mx-2 text-gray-500">/</span>
-            <a href="#" class="text-blue-600 hover:text-blue-800">Listings</a>
-            <span class="mx-2 text-gray-500">/</span>
-            <span class="text-gray-600">{{ $car->name }}</span>
-        </nav>
-    </div>
+    <livewire:site.top-nav />
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-6">
@@ -117,11 +108,10 @@
                 </div>
 
                 @if ($car?->images)
-                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
-                        class="w-full h-64 object-cover">
+                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry" class="w-full h-64 object-cover">
                 @else
-                    <img src="https://cdn.pixabay.com/photo/2012/04/12/23/47/car-30984_1280.png" alt="Toyota Camry"
-                        class="w-full h-64 object-cover">
+                    <img src="{{ asset('assets/car_placeholder.png') }}" alt="Toyota Camry"
+                        class="w-full h-64 object-fit-cover" />
                 @endif
 
                 <button
@@ -139,37 +129,11 @@
 
             <!-- Side Images Grid -->
             <div class="grid grid-cols-2 gap-4">
-                {{-- @foreach ($car?->images as $idx => $image)
-                    @if ($idx == 0)
-                        @continue
-                        <img src="{{ Storage::url($car?->images[$idx]) }}" alt="Toyota Camry"
-                            class="w-full h-64 object-cover">
-                    @endif
-                @endforeach --}}
-
-                {{-- @if ($car?->images)
-                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
-                        class="w-full h-64 object-cover">
-                @else
-                    <img src="https://cdn.pixabay.com/photo/2012/04/12/23/47/car-30984_1280.png" alt="Toyota Camry"
-                        class="w-full h-64 object-cover">
-                @endif --}}
-                <div class="overflow-hidden rounded-lg">
-                    <img src="https://cdn.pixabay.com/photo/2016/05/18/10/52/buick-1400243_1280.jpg"
-                        alt="Car Side View 1" class="w-full h-full object-cover rounded-lg">
-                </div>
-                <div class="overflow-hidden rounded-lg">
-                    <img src="https://cdn.pixabay.com/photo/2013/07/12/12/45/car-146185_1280.png"
-                        alt="Car Side View 2" class="w-full h-full object-cover rounded-lg">
-                </div>
-                <div class="overflow-hidden rounded-lg">
-                    <img src="https://cdn.pixabay.com/photo/2017/01/06/05/28/car-1957037_1280.jpg"
-                        alt="Car Side View 3" class="w-full h-full object-cover rounded-lg">
-                </div>
-                <div class="overflow-hidden rounded-lg">
-                    <img src="https://cdn.pixabay.com/photo/2016/05/05/18/03/coupe-1374448_1280.jpg"
-                        alt="Car Side View 4" class="w-full h-full object-cover rounded-lg">
-                </div>
+                @if ($car?->images && count($car?->images))
+                    @foreach ($car?->images as $idx => $image)
+                        <img src="{{ Storage::url($image) }}" alt="Toyota Camry" class="w-full h-24 object-cover">
+                    @endforeach
+                @endif
             </div>
         </div>
     </main>
@@ -488,28 +452,6 @@
                     scelerisque.
                 </p>
             </div>
-
-            <div class="flex flex-wrap gap-4">
-                <a href="#"
-                    class="flex items-center px-6 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                    <svg class="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
-                        <path d="M8 11h4m-2-2v4" stroke="#4F7CF6" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    <span class="font-medium">Schedule-Test-Drive.Pdf</span>
-                </a>
-
-                <a href="#"
-                    class="flex items-center px-6 py-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                    <svg class="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
-                        <path d="M8 11h4m-2-2v4" stroke="#4F7CF6" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    <span class="font-medium">Car-Brochure.Pdf</span>
-                </a>
-            </div>
         </div>
     </section>
 
@@ -522,107 +464,22 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Interior</h3>
                     <ul class="space-y-3">
-                        <h1>Car features should be here...</h1>
-                        {{-- @foreach ($car?->features as $feat)
-                            <li class="flex items-center">
-                                <span
-                                    class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </span>
-
-                                {{ ucfirst($feat) }}
-                            </li>
-                        @endforeach --}}
-
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Air Conditioner
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Digital Odometer
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Heater
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Leather Seats
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Panoramic Moonroof
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Tachometer
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Touchscreen Display
-                        </li>
+                        @if ($car->exterior_features && count($car->exterior_features) > 0)
+                            @foreach ($car->exterior_features as $feat)
+                                <li class="flex items-center">
+                                    <span
+                                        class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    {{ ucfirst($feat) }}
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
 
@@ -630,90 +487,22 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Safety</h3>
                     <ul class="space-y-3">
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Anti-lock Braking
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Brake Assist
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Child Safety Locks
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Driver Air Bag
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Power Door Locks
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Stability Control
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Traction Control
-                        </li>
+                        @if ($car->safety_features && count($car->safety_features) > 0)
+                            @foreach ($car->safety_features as $feat)
+                                <li class="flex items-center">
+                                    <span
+                                        class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    {{ ucfirst($feat) }}
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
 
@@ -721,54 +510,22 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Exterior</h3>
                     <ul class="space-y-3">
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Fog Lights Front
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Rain Sensing Wiper
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Rear Spoiler
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Windows - Electric
-                        </li>
+                        @if ($car->exterior_features && count($car->exterior_features) > 0)
+                            @foreach ($car->exterior_features as $feat)
+                                <li class="flex items-center">
+                                    <span
+                                        class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    {{ ucfirst($feat) }}
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
 
@@ -776,66 +533,22 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Comfort & Convenience</h3>
                     <ul class="space-y-3">
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Android Auto
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Apple CarPlay
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Bluetooth
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            HomeLink
-                        </li>
-                        <li class="flex items-center">
-                            <span
-                                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </span>
-                            Power Steering
-                        </li>
+                        @if ($car->comfort_features && count($car->comfort_features) > 0)
+                            @foreach ($car->comfort_features as $feat)
+                                <li class="flex items-center">
+                                    <span
+                                        class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 mr-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    {{ ucfirst($feat) }}
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -864,7 +577,7 @@
                     </div>
                     <div class="flex justify-between border-b pb-2">
                         <span class="font-medium">Width (including mirrors)</span>
-                        <span>{{ $car?->length_with_mirrors }}</span>
+                        <span>{{ $car?->width_with_mirrors }}</span>
                     </div>
 
                     <div class="flex justify-between border-b pb-2">
@@ -941,8 +654,7 @@
 
     <section>
         <div class="max-w-4xl mx-auto p-6">
-            <!-- Location Section -->
-            <div class="mb-12">
+            {{-- <div class="mb-12">
                 <h2 class="text-3xl font-bold mb-4">Location</h2>
 
                 <p class="text-lg mb-2">{{ $car?->dealer?->address }}</p>
@@ -1002,7 +714,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Financing Calculator Section -->
             <div class="mb-12">
@@ -1069,7 +781,7 @@
                         <span class="text-blue-500 text-sm">Overral Rating</span>
 
                         <span class="text-blue-500 text-6xl font-bold">
-                            {{ $car?->reviews->sum('rating') / $car?->reviews->count() }}</span>
+                            {{ round($car?->reviews->sum('rating') / $car?->reviews->count(), 1) }}</span>
                         <span class="text-blue-500 text-sm">Out of 5</span>
                     </div>
                 </div>
@@ -1437,4 +1149,7 @@
                 Submit Rating
             </button>
     </section> --}}
+
+    <livewire:site.footer />
+
 </div>

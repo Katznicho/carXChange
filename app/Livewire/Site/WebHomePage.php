@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Site;
 
+use App\Models\Blog;
 use App\Models\Car;
 use App\Models\Category;
 use Livewire\Attributes\Locked;
@@ -41,6 +42,11 @@ class WebHomePage extends Component
             ->limit(8)
             ->get();
 
-        return view('livewire.site.web-home-page', compact('cars'));
+        $blogs = Blog::where('is_published', 1)
+            ->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get();
+
+        return view('livewire.site.web-home-page', compact('cars', 'blogs'));
     }
 }

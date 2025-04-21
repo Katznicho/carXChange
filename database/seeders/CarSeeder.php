@@ -141,33 +141,33 @@ class CarSeeder extends Seeder
                 'color' => [fake()->colorName()],
                 'drive_type' => fake()->randomElement(['fwd', 'rwd', 'awd', '4x4']),
                 'description' => fake()->paragraphs(3, true),
-                'interior_features' => json_encode([
+                'interior_features' => [
                     'Air Conditioner',
                     'Digital Odometer',
                     'Leather Seats',
                     'Panoramic Moonroof',
                     'Touchscreen Display',
-                ]),
-                'exterior_features' => json_encode([
+                ],
+                'exterior_features' => [
                     'Fog Lights Front',
                     'Rain Sensing Wiper',
                     'Rear Spoiler',
                     'Windows - Electric',
-                ]),
-                'safety_features' => json_encode([
+                ],
+                'safety_features' => [
                     'Anti-lock Braking',
                     'Brake Assist',
                     'Child Safety Locks',
                     'Driver Air Bag',
                     'Stability Control',
-                ]),
-                'comfort_features' => json_encode([
+                ],
+                'comfort_features' => [
                     'Android Auto',
                     'Apple CarPlay',
                     'Bluetooth',
                     'HomeLink',
                     'Power Steering',
-                ]),
+                ],
                 'is_featured' => fake()->boolean(20),
                 'is_sold' => fake()->boolean(10),
                 'is_active' => true,

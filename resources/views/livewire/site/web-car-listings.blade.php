@@ -161,16 +161,16 @@
 
         <div class="relative mt-8 mx-auto w-1/3">
             <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                d="M10 2a8 8 0 105.293 14.707l4.387 4.387a1 1 0 001.414-1.414l-4.387-4.387A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
-            </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M10 2a8 8 0 105.293 14.707l4.387 4.387a1 1 0 001.414-1.414l-4.387-4.387A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
+                </svg>
             </div>
 
             <input type="text" wire:model.live.debounce.500ms='filtered_search'
-            class="w-full h-[3rem] block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Search for cars, trucks, SUVs, etc." />
+                class="w-full h-[3rem] block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Search for cars, trucks, SUVs, etc." />
         </div>
     </div>
 
@@ -190,13 +190,15 @@
                         <div wire:key={{ $car->id }} class="bg-white rounded-lg overflow-hidden shadow">
                             <!-- Card Image with Badge and Bookmark -->
                             <div class="relative">
-                                @if ($car?->images)
-                                    <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
-                                        class="w-full h-64 object-fit-cover">
-                                @else
-                                    <img src="{{ asset('assets/car_placeholder.png') }}" alt="Toyota Camry"
-                                        class="w-full h-64 object-fit-cover">
-                                @endif
+                                <a href="{{ route('site.car.details', $car?->slug) }}">
+                                    @if ($car?->images)
+                                        <img src="{{ Storage::url($car?->images[0]) }}" alt="Toyota Camry"
+                                            class="w-full h-64 object-fit-cover">
+                                    @else
+                                        <img src="{{ asset('assets/car_placeholder.png') }}" alt="Toyota Camry"
+                                            class="w-full h-64 object-fit-cover">
+                                    @endif
+                                </a>
 
                                 @if ($car->is_featured)
                                     <div class="absolute top-4 left-4">
@@ -225,8 +227,8 @@
                                 <div class="flex justify-between mb-4">
                                     <div class="flex flex-col items-center">
                                         <div class="bg-gray-100 p-2 rounded-full mb-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                viewBox="0 0 20 20" fill="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                fill="currentColor">
                                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                                 <path fill-rule="evenodd"
                                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z"
@@ -238,8 +240,8 @@
 
                                     <div class="flex flex-col items-center">
                                         <div class="bg-gray-100 p-2 rounded-full mb-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                viewBox="0 0 20 20" fill="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                fill="currentColor">
                                                 <path fill-rule="evenodd"
                                                     d="M3 6a3 3 0 013-3h10a1 1 0 011 1v10a2 2 0 01-2 2H5a3 3 0 01-3-3V6zm3-1a1 1 0 00-1 1v7a1 1 0 001 1h10V5H6z"
                                                     clip-rule="evenodd" />

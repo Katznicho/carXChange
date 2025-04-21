@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Site\WebBlogPostDetails;
+use App\Livewire\Site\WebBlogPosts;
 use App\Livewire\Site\WebCarDetails;
 use App\Livewire\Site\WebCarListings;
 use App\Livewire\Site\WebHomePage;
@@ -9,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', WebHomePage::class)->name('site.index');
 Route::get('/car-listings', WebCarListings::class)->name('site.car-listings');
 Route::get('/cars/{slug}', WebCarDetails::class)->name('site.car.details');
+
+Route::get('/blogs', WebBlogPosts::class)->name('site.blogs');
+Route::get('/blogs/{slug}', WebBlogPostDetails::class)->name('site.blog.details');
 
 // Get all cars
 Route::get('/cars', function () {
