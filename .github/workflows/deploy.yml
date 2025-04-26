@@ -1,0 +1,104 @@
+name: Website Deployment to Production 
+
+on: 
+  push: 
+    branches: [ "main" ] 
+
+jobs: 
+  deploy: 
+    runs-on: ubuntu-latest 
+
+    services: 
+      mysql: 
+        image: mysql:8.0 
+        env: 
+          MYSQL_ROOT_PASSWORD: u227994091_carxchange
+          MYSQL_DATABASE: u227994091_carxchange
+          MYSQL_USER: u227994091_carxchange
+          MYSQL_PASSWORD: Log10tan10
+        ports: 
+          - 3306:3306 
+        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3 
+
+    steps: 
+      - name: Checkout Repository 
+        uses: actions/checkout@v4 
+
+      - name: Set up PHP 
+        uses: shivammathur/setup-php@v2 
+        with: 
+          php-version: '8.2' 
+          extensions: mbstring, bcmath, intl, pdo, mysql 
+          tools: composer:2.x
+
+      - name: Cache Composer Dependencies 
+        uses: actions/cache@v3 
+        with: 
+          path: vendor 
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }} 
+          restore-keys: ${{ runner.os }}-composer- 
+
+      - name: Deploy to Production
+        if: success() 
+        uses: appleboy/ssh-action@v1.0.0 
+        with: 
+          host: ${{ secrets.HOSTINGER_IP }} 
+          username: ${{ secrets.HOSTINGER_USERNAME }} 
+          password: ${{ secrets.HOSTINGER_PASSWORD }} 
+          port: 65002 
+          script: | 
+            DEPLOY_DIR="domains/carxchangeapp.com/public_html" 
+            cd "$DEPLOY_DIR" 
+
+            # Set up SSH key for Git 
+            mkdir -p ~/.ssh 
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 
+            chmod 600 ~/.ssh/id_ed25519 
+            ssh-keyscan github.com >> ~/.ssh/known_hosts 
+
+            # Ensure Git uses SSH remote 
+            if [ -d ".git" ]; then 
+              echo "Setting remote URL to SSH..." 
+              git remote set-url origin git@github.com:Katznicho/carXChange.git 
+              echo "Pulling latest changes from main branch..." 
+              git fetch origin 
+              git reset --hard origin/main 
+            else 
+              echo "Cloning repository with SSH..." 
+              git clone -b main git@github.com:Katznicho/carXChange.git . 
+            fi 
+
+            # Install Composer 2.x locally if not present 
+            if [ ! -f "composer" ]; then 
+              php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" 
+              php composer-setup.php 
+              php -r "unlink('composer-setup.php');" 
+              mv composer.phar composer 
+              chmod +x composer 
+            fi 
+
+            # Use local Composer 2.x for dependencies 
+            if [ ! -d "vendor" ] || [ -n "$(git diff --name-only HEAD^ HEAD | grep 'composer.json\|composer.lock')" ]; then 
+              ./composer install --no-dev --optimize-autoloader 
+            fi 
+
+            # Dump autoload 
+            ./composer dump-autoload --optimize 
+
+            # Clear caches 
+            php artisan optimize:clear 
+            php artisan config:clear 
+            php artisan cache:clear 
+            php artisan route:clear 
+            php artisan route:cache 
+
+            # Ensure storage symlink 
+            if [ ! -L public/storage ]; then 
+              ln -s $(pwd)/storage/app/public $(pwd)/public/storage || echo "Symlink creation failed: $?" 
+            fi 
+
+            # Always run migrations 
+            php artisan migrate --force 
+
+            # Touch index.php to force reload 
+            touch index.php
