@@ -41,9 +41,9 @@ jobs:
         if: success() 
         uses: appleboy/ssh-action@v1.0.0 
         with: 
-          host: ${{ secrets.HOSTINGER_IP }} 
-          username: ${{ secrets.HOSTINGER_USERNAME }} 
-          password: ${{ secrets.HOSTINGER_PASSWORD }} 
+          host: ${{ secrets.HOSTINGER_IP }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
           port: 65002 
           script: | 
             DEPLOY_DIR="domains/carxchangeapp.com/public_html" 
@@ -98,6 +98,13 @@ jobs:
 
             # Always run migrations 
             php artisan migrate --force 
+
+            # Run seeders only on first setup
+            if [ ! -f ".seeder_completed" ]; then
+              echo "Running seeders for first-time setup..."
+              php artisan db:seed --force
+              touch .seeder_completed
+            fi
 
             # Touch index.php to force reload 
             touch index.php
