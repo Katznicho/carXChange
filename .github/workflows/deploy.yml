@@ -50,11 +50,33 @@ jobs:
             DEPLOY_DIR="domains/carxchangeapp.com/public_html" 
             cd "$DEPLOY_DIR" 
 
-            # Set up SSH key for Git 
-            mkdir -p ~/.ssh 
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 
-            chmod 600 ~/.ssh/id_ed25519 
-            ssh-keyscan github.com >> ~/.ssh/known_hosts 
+            # Set up SSH key for Git with debug
+            mkdir -p ~/.ssh
+            echo "Setting up SSH key..."
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            
+            # Test SSH connection
+            echo "Testing SSH connection to GitHub..."
+            ssh -T git@github.com || true
+            
+            # Clean and prepare directory
+            echo "Preparing directory..."
+            rm -rf .git
+            
+            # Fresh clone with verbose output
+            echo "Performing fresh clone..."
+            git clone -v --progress git@github.com:Katznicho/carXChange.git temp_dir
+            
+            # Move contents and cleanup
+            echo "Moving repository contents..."
+            cp -r temp_dir/. .
+            rm -rf temp_dir
+            
+            echo "Verifying repository contents:"
+            ls -la
+            git status
 
             # Add debug statements
             echo "Current directory contents:"
