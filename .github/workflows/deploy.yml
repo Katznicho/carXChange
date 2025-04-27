@@ -41,10 +41,10 @@ jobs:
         if: success() 
         uses: appleboy/ssh-action@v1.0.0 
         with: 
-          debug: true # Enable debug mode
-          host: "${{ secrets.HOSTINGER_IP }}"
-          username: "${{ secrets.HOSTINGER_USERNAME }}"
-          password: "${{ secrets.HOSTINGER_PASSWORD }}"
+          debug: true
+          host: "178.16.128.225"
+          username: "u227994091"
+          password: "!Log19tan88"
           port: "65002"
           script: | 
             DEPLOY_DIR="domains/carxchangeapp.com/public_html" 
