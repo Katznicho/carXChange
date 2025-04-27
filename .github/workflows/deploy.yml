@@ -56,17 +56,32 @@ jobs:
             chmod 600 ~/.ssh/id_ed25519 
             ssh-keyscan github.com >> ~/.ssh/known_hosts 
 
+            # Add debug statements
+            echo "Current directory contents:"
+            ls -la
+            
             # Ensure Git uses SSH remote 
             if [ -d ".git" ]; then 
+              echo "Git directory exists, updating..."
               echo "Setting remote URL to SSH..." 
               git remote set-url origin git@github.com:Katznicho/carXChange.git 
+              echo "Current git remote:"
+              git remote -v
               echo "Pulling latest changes from main branch..." 
               git fetch origin 
               git reset --hard origin/main 
+              echo "Git status after pull:"
+              git status
             else 
+              echo "No git directory found, cloning fresh..."
               echo "Cloning repository with SSH..." 
               git clone -b main git@github.com:Katznicho/carXChange.git . 
+              echo "Git status after clone:"
+              git status
             fi 
+            
+            echo "Final directory contents:"
+            ls -la
 
             # Install Composer 2.x locally if not present 
             if [ ! -f "composer" ]; then 
