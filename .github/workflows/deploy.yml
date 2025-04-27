@@ -229,7 +229,36 @@ jobs:
               touch .seeder_completed
             fi
 
-            # Ensure proper .htaccess exists in public directory
+            # Create root .htaccess file
+            echo "Creating root .htaccess file..."
+            cat > .htaccess << 'EOL'
+            <IfModule mod_rewrite.c>
+                # That was ONLY to protect you from 500 errors
+                # if your server did not have mod_rewrite enabled
+                RewriteEngine On
+                # RewriteBase /
+                # NOT needed unless you're using mod_alias to redirect
+                RewriteCond %{REQUEST_URI} !/public
+                RewriteRule ^(.*)$ public/$1 [L]
+                # Direct all requests to /public folder
+            </IfModule>
+            EOL
+
+            # Verify root .htaccess was created
+            echo "Verifying root .htaccess file..."
+            if [ -f ".htaccess" ]; then
+                echo "Root .htaccess file created successfully"
+                ls -la .htaccess
+                cat .htaccess
+            else
+                echo "ERROR: Root .htaccess file creation failed!"
+            fi
+
+            # Set proper permissions for root .htaccess
+            chmod 644 .htaccess
+
+            # Create and verify public/.htaccess file
+            echo "Creating .htaccess file..."
             cat > public/.htaccess << 'EOL'
             <IfModule mod_rewrite.c>
                 <IfModule mod_negotiation.c>
@@ -253,6 +282,19 @@ jobs:
                 RewriteRule ^ index.php [L]
             </IfModule>
             EOL
+
+            # Verify .htaccess was created
+            echo "Verifying .htaccess file..."
+            if [ -f "public/.htaccess" ]; then
+                echo ".htaccess file created successfully"
+                ls -la public/.htaccess
+                cat public/.htaccess
+            else
+                echo "ERROR: .htaccess file creation failed!"
+            fi
+
+            # Set proper permissions for .htaccess
+            chmod 644 public/.htaccess
 
             # Touch index.php to force reload 
             touch index.php
