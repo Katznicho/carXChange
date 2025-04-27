@@ -144,5 +144,117 @@ jobs:
               touch .seeder_completed
             fi
 
+            # Ensure proper .htaccess exists in public directory
+            cat > public/.htaccess << 'EOL'
+            <IfModule mod_rewrite.c>
+                <IfModule mod_negotiation.c>
+                    Options -MultiViews -Indexes
+                </IfModule>
+
+                RewriteEngine On
+
+                # Handle Authorization Header
+                RewriteCond %{HTTP:Authorization} .
+                RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+                # Redirect Trailing Slashes If Not A Folder...
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_URI} (.+)/$
+                RewriteRule ^ %1 [L,R=301]
+
+                # Send Requests To Front Controller...
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^ index.php [L]
+            </IfModule>
+            EOL
+
             # Touch index.php to force reload 
             touch index.php
+
+            echo "Deployment completed!"
+
+            # Create .env file
+            echo "Creating .env file..."
+            cat > .env << 'EOL'
+            APP_NAME=CarXChange
+            APP_ENV=production
+            APP_DEBUG=false
+            APP_URL=https://carxchangeapp.com
+
+            LOG_CHANNEL=stack
+            LOG_DEPRECATIONS_CHANNEL=null
+            LOG_LEVEL=debug
+
+            DB_CONNECTION=mysql
+            DB_HOST=127.0.0.1
+            DB_PORT=3306
+            DB_DATABASE=u227994091_carxchange
+            DB_USERNAME=u227994091_carxchange
+            DB_PASSWORD=Log10tan10
+
+            BROADCAST_DRIVER=log
+            CACHE_DRIVER=file
+            FILESYSTEM_DISK=local
+            QUEUE_CONNECTION=sync
+            SESSION_DRIVER=file
+            SESSION_LIFETIME=120
+            EOL
+
+            # Generate application key
+            php artisan key:generate --force
+
+            # Set proper permissions
+            chmod -R 755 storage bootstrap/cache
+            chown -R www-data:www-data storage bootstrap/cache
+
+            # Install Composer dependencies
+            ./composer install --no-dev --optimize-autoloader 
+
+            # Clear all caches and optimize
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan optimize:clear
+
+            # Run migrations with force and verbose output
+            echo "Running database migrations..."
+            php artisan migrate --force --verbose
+
+            # Run seeders only on first setup
+            if [ ! -f ".seeder_completed" ]; then
+              echo "Running seeders for first-time setup..."
+              php artisan db:seed --force
+              touch .seeder_completed
+            fi
+
+            # Ensure proper .htaccess exists in public directory
+            cat > public/.htaccess << 'EOL'
+            <IfModule mod_rewrite.c>
+                <IfModule mod_negotiation.c>
+                    Options -MultiViews -Indexes
+                </IfModule>
+
+                RewriteEngine On
+
+                # Handle Authorization Header
+                RewriteCond %{HTTP:Authorization} .
+                RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+                # Redirect Trailing Slashes If Not A Folder...
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_URI} (.+)/$
+                RewriteRule ^ %1 [L,R=301]
+
+                # Send Requests To Front Controller...
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteRule ^ index.php [L]
+            </IfModule>
+            EOL
+
+            # Touch index.php to force reload 
+            touch index.php
+
+            echo "Deployment completed!"
