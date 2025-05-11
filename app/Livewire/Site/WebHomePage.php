@@ -17,6 +17,8 @@ class WebHomePage extends Component
     #[Locked]
     public $selectedCategory = null;
 
+    public $filtered_search = '';
+
     public function mount()
     {
         $this->categories = Category::select(['id', 'name', 'image'])
@@ -33,14 +35,26 @@ class WebHomePage extends Component
     #[Title('Welcome to CarxChange')]
     public function render()
     {
-        $cars = Car::where('is_active', 1)
+        $carsQuery = Car::where('is_active', 1)
             ->where('is_featured', 1)
-            ->when($this->selectedCategory, function ($query) {
+            ->when(! $this->filtered_search && $this->selectedCategory, function ($query) {
                 $query->where('category_id', $this->selectedCategory);
             })
-            ->orderBy('created_at', 'desc')
-            ->limit(8)
-            ->get();
+            ->when($this->filtered_search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%'.$this->filtered_search.'%')
+                        ->orWhere('brand', 'like', '%'.$this->filtered_search.'%')
+                        ->orWhere('model', 'like', '%'.$this->filtered_search.'%')
+                        ->orWhere('description', 'like', '%'.$this->filtered_search.'%');
+                });
+            })
+            ->orderBy('created_at', 'desc');
+
+        if ($this->filtered_search) {
+            $cars = $carsQuery->get();
+        } else {
+            $cars = $carsQuery->paginate(8);
+        }
 
         $blogs = Blog::where('is_published', 1)
             ->orderBy('created_at', 'desc')

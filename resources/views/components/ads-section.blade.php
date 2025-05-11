@@ -7,7 +7,7 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-blue-600/50 p-8 flex flex-col justify-center">
                     <h3 class="text-2xl font-bold text-white mb-4">Sell Your Car</h3>
                     <p class="text-white mb-6">Get the best value for your vehicle with our trusted platform</p>
-                    <a href="#" class="inline-block bg-white text-blue-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 w-fit">
+                    <a href="{{ url('/dealer') }}" target="_blank" class="inline-block bg-white text-blue-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 w-fit">
                         List Now
                     </a>
                 </div>

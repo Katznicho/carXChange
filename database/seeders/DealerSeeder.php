@@ -3,16 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\Dealer;
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class DealerSeeder extends Seeder
 {
     public function run(): void
     {
         $faker = Faker::create();
-        
+
         $dealers = [
             'Victoria Motors',
             'Toyota Uganda',

@@ -44,9 +44,9 @@
                     <li><a href="{{ route('site.index') }}" class="text-gray-300 hover:text-white">Home</a></li>
                     <li><a href="{{ route('site.car-listings') }}" class="text-gray-300 hover:text-white">Browse
                             Cars</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Sell Your Car</a></li>
-                    <li><a href="/#why-choose-us" class="text-gray-300 hover:text-white">About Us</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Contact</a></li>
+                    <li><a href="{{ url('dealer') }}" target="_blank" class="text-gray-300 hover:text-white">Sell Your Car</a></li>
+                    <li><a href="{{ route('site.about-us') }}" class="text-gray-300 hover:text-white">About Us</a></li>
+                    <li><a href="{{ route('site.contact-us') }}" class="text-gray-300 hover:text-white">Contact</a></li>
                 </ul>
             </div>
 
@@ -131,11 +131,11 @@
                 </div>
                 <div class="mt-4 md:mt-0">
                     <ul class="flex space-x-6">
-                        <li><a href="#" class="text-sm text-gray-400 hover:text-gray-300">Privacy Policy</a>
+                        <li><a href="{{ route('site.privacy-policy') }}" class="text-sm text-gray-400 hover:text-gray-300">Privacy Policy</a>
                         </li>
-                        <li><a href="#" class="text-sm text-gray-400 hover:text-gray-300">Terms of Service</a>
+                        <li><a href="{{ route('site.terms-of-service') }}" class="text-sm text-gray-400 hover:text-gray-300">Terms of Service</a>
                         </li>
-                        <li><a href="#" class="text-sm text-gray-400 hover:text-gray-300">Cookie Policy</a></li>
+                        {{-- <li><a href="#" class="text-sm text-gray-400 hover:text-gray-300">Cookie Policy</a></li> --}}
                     </ul>
                 </div>
             </div>

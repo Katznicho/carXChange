@@ -14,13 +14,13 @@
                     <a href="{{ route('site.car-listings') }}"
                         class="text-gray-300 hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md font-medium">Browse
                         Cars</a>
-                    <a href="#"
+                    <a href="{{ url('/dealer') }}" target="_blank"
                         class="text-gray-300 hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md font-medium">Sell
                         Your Car</a>
-                    <a href="/#why-choose-us"
+                    <a href="{{ route('site.about-us') }}"
                         class="text-gray-300 hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md font-medium">About
                         Us</a>
-                    <a href="#"
+                    <a href="{{ route('site.contact-us') }}"
                         class="text-gray-300 hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md font-medium">Contact</a>
                 </div>
             </div>

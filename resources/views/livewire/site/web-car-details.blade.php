@@ -103,7 +103,7 @@
             <!-- Main Image -->
             <div class="lg:col-span-2 relative overflow-hidden rounded-lg">
                 <div
-                    class="absolute top-4 left-4 bg-green-500 text-white px-4 py-1 rounded-full font-medium text-sm z-10">
+                    class="absolute top-4 left-4 bg-blue-600 text-white px-4 py-1 rounded-full font-medium text-sm z-10">
                     Great Price
                 </div>
 

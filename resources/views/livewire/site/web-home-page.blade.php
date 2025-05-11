@@ -35,10 +35,29 @@
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">Featured Vehicles</h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">Discover our hand-picked selection of premium
                     vehicles, each thoroughly inspected and ready for their new owner.</p>
+
+                <div class="relative mt-8 mx-auto w-1/3">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M10 2a8 8 0 105.293 14.707l4.387 4.387a1 1 0 001.414-1.414l-4.387-4.387A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
+                        </svg>
+                    </div>
+
+                    <input type="text" wire:model.live.debounce.500ms='filtered_search'
+                        class="w-full h-[3rem] block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Search for cars, trucks, SUVs, etc." />
+                </div>
             </div>
 
             <div class="max-w-7xl mx-auto px-4 py-8">
                 <!-- Car Listing Cards Grid -->
+
+                @if ($cars->count() == 0)
+                    <p class="text-center text-gray-500">No cars found</p>
+                @endif
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach ($cars as $carIndex => $car)
                         <div wire:key={{ $car->id }} class="bg-white rounded-lg overflow-hidden shadow">
@@ -56,7 +75,7 @@
 
                                 <div class="absolute top-4 left-4">
                                     <span
-                                        class="bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">Great
+                                        class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">Great
                                         Price</span>
                                 </div>
 
@@ -154,49 +173,6 @@
                     </svg>
                 </a>
             </div>
-
-            {{-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <x-cars.featured-car :car="[
-                    'name' => 'Mercedes-Benz C-Class',
-                    'price' => 45000,
-                    'year' => '2023',
-                    'mileage' => '15,000',
-                    'transmission' => 'Automatic',
-                    'image' =>
-                        'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                ]" />
-
-                <x-cars.featured-car :car="[
-                    'name' => 'BMW 3 Series',
-                    'price' => 42000,
-                    'year' => '2022',
-                    'mileage' => '20,000',
-                    'transmission' => 'Automatic',
-                    'image' =>
-                        'https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                ]" />
-
-                <x-cars.featured-car :car="[
-                    'name' => 'Audi A4',
-                    'price' => 39000,
-                    'year' => '2023',
-                    'mileage' => '12,000',
-                    'transmission' => 'Automatic',
-                    'image' =>
-                        'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                ]" />
-            </div> --}}
-
-            {{-- <div class="text-center mt-12">
-                <a href="#"
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                    View All Vehicles
-                    <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </a>
-            </div> --}}
         </div>
     </section>
 
@@ -236,7 +212,8 @@
             <a href="{{ route('site.blogs') }}"
                 class="inline-flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-blue-600 font-medium text-lg rounded-full hover:bg-blue-600 hover:text-white transition duration-300 shadow-md">
                 View All Articles
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                    fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
                         clip-rule="evenodd" />

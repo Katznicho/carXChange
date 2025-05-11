@@ -203,7 +203,7 @@
                                 @if ($car->is_featured)
                                     <div class="absolute top-4 left-4">
                                         <span
-                                            class="bg-green-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                            class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium">
                                             Great Price
                                         </span>
                                     </div>
