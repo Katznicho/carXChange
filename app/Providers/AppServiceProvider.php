@@ -3,9 +3,23 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Filament\Facades\Filament;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    public function boot(): void
+    {
+        // Filament::registerRenderHook(
+        //     'body.start',
+        //     fn () => view('livewire.site.top-nav')
+        // );
+
+        // Filament::registerRenderHook(
+        //     'body.end',
+        //     fn () => view('livewire.site.footer')
+        // );
+    }
     /**
      * Register any application services.
      */
@@ -17,8 +31,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        //
-    }
+    // public function boot(): void
+    // {
+    //     //
+    // }
 }

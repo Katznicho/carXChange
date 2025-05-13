@@ -12,7 +12,7 @@
                 <a href="{{ route('site.car-listings') }}" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition">
                     Browse Cars
                 </a>
-                <a href="#" class="inline-block bg-white text-gray-900 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition">
+                <a href="{{ url('/dealer') }}" class="inline-block bg-white text-gray-900 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition">
                     Sell Your Car
                 </a>
             </div>

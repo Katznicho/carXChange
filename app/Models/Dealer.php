@@ -5,9 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class Dealer extends Authenticatable
+class Dealer extends Authenticatable implements FilamentUser
 {
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
     use HasFactory, Notifiable;
 
     protected $fillable = [
